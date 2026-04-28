@@ -38,7 +38,7 @@ body {
   align-items: center;
   padding: 0 clamp(1rem, 5vw, 3rem);
   height: 72px;
-  background: #dc2626;
+  background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   position: fixed;
