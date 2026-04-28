@@ -1,9 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
-import page1 from './assets/page_000.png';
-import page2 from './assets/page_001.png';
-import page3 from './assets/page_002.png';
-import page4 from './assets/page_003.png';
 
 const services = [
   {
@@ -38,16 +34,67 @@ const services = [
   }
 ];
 
+const testimonials = [
+  {
+    name: 'María García',
+    location: 'Orihuela',
+    text: 'Llevamos 3 años con Yolisa y no podemos estar más satisfechos. Siempre puntuales, profesionales y dejan todo impecable.',
+    rating: 5
+  },
+  {
+    name: 'Carlos López',
+    location: 'Alicante',
+    text: 'Contratamos la limpieza de nuestra comunidad y el resultado ha sido excepcional. Totalmente recomendados.',
+    rating: 5
+  },
+  {
+    name: 'Ana Martínez',
+    location: 'Orihuela',
+    text: 'Necesitaba una limpieza profunda antes de una mudanza y.lo dejaron todo perfecto. Muy contenta.',
+    rating: 5
+  }
+];
+
+const stats = [
+  { value: '5/5', label: 'Valoración', suffix: '' },
+  { value: '10', label: 'Años', suffix: '+' },
+  { value: '100', label: 'Garantía', suffix: '%' },
+  { value: '500', label: 'Clientes', suffix: '+' }
+];
+
 function App() {
-  const [currentImage, setCurrentImage] = useState(0);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [visibleStats, setVisibleStats] = useState(false);
+  const [statsAnimated, setStatsAnimated] = useState({});
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const statsSection = document.getElementById('stats');
+      if (statsSection) {
+        const rect = statsSection.getBoundingClientRect();
+        if (rect.top < window.innerHeight * 0.8) {
+          setVisibleStats(true);
+        }
+      }
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
+    if (visibleStats) {
+      stats.forEach((stat, index) => {
+        setTimeout(() => {
+          setStatsAnimated(prev => ({ ...prev, [index]: true }));
+        }, index * 150);
+      });
+    }
+  }, [visibleStats]);
 
   const scrollToSection = (id) => {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
     setIsMenuOpen(false);
   };
-
-  const images = [page1, page2, page3, page4];
 
   return (
     <div className="app">
@@ -64,131 +111,180 @@ function App() {
         <ul className={`nav-links ${isMenuOpen ? 'active' : ''}`}>
           <li><button onClick={() => scrollToSection('inicio')}>Inicio</button></li>
           <li><button onClick={() => scrollToSection('servicios')}>Servicios</button></li>
-          <li><button onClick={() => scrollToSection('galeria')}>Galería</button></li>
           <li><button onClick={() => scrollToSection('nosotros')}>Nosotros</button></li>
+          <li><button onClick={() => scrollToSection('testimonios')}>Opiniones</button></li>
           <li><button onClick={() => scrollToSection('contacto')}>Contacto</button></li>
         </ul>
       </nav>
 
       {/* Hero Section */}
       <section id="inicio" className="hero">
+        <div className="hero-bg-gradient"></div>
         <div className="hero-content">
+          <div className="hero-badge">
+            <span className="badge-dot"></span>
+            Disponible ahora en Orihuela y provincia
+          </div>
           <h1>Limpiezas Integrales<br/>Yolisa</h1>
           <p className="tagline">Profesionales que cuidan lo que más importa.<br/>Resultados impecables en cada servicio.</p>
           <div className="hero-buttons">
-            <a href="tel:649136201" className="btn-primary">Llamar ahora</a>
-            <a href="https://wa.me/34649136201" className="btn-secondary" target="_blank" rel="noopener noreferrer">WhatsApp</a>
-          </div>
-          <div className="hero-stats">
-            <div className="stat">
-              <span className="stat-value">5/5</span>
-              <span className="stat-label">Valoración</span>
-            </div>
-            <div className="stat">
-              <span className="stat-value">+10</span>
-              <span className="stat-label">Años</span>
-            </div>
-            <div className="stat">
-              <span className="stat-value">100%</span>
-              <span className="stat-label">Garantía</span>
-            </div>
+            <a href="tel:649136201" className="btn-primary">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.574 2.81.7A2 2 0 0 1 22 16.92z"/>
+              </svg>
+              Llamar ahora
+            </a>
+            <a href="https://wa.me/34649136201" className="btn-secondary" target="_blank" rel="noopener noreferrer">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+              </svg>
+              WhatsApp
+            </a>
           </div>
         </div>
       </section>
 
-      {/* Services Section */}
-      <section id="servicios" className="services">
-        <h2>Nuestros Servicios</h2>
-        <p className="section-subtitle">Soluciones profesionales para cada necesidad</p>
-        <div className="services-grid">
-          {services.map((service, index) => (
-            <div key={index} className="service-card">
-              <span className="service-icon">{service.icon}</span>
-              <h3>{service.title}</h3>
-              <p>{service.description}</p>
+      {/* Stats Section */}
+      <section id="stats" className="stats-section">
+        <div className="stats-container">
+          {stats.map((stat, index) => (
+            <div key={index} className={`stat-item ${statsAnimated[index] ? 'visible' : ''}`}>
+              <span className="stat-value">
+                {stat.value}{stat.suffix}
+              </span>
+              <span className="stat-label">{stat.label}</span>
             </div>
           ))}
         </div>
       </section>
 
-      {/* Gallery Section */}
-      <section id="galeria" className="gallery">
-        <h2>Documentación</h2>
-        <p className="section-subtitle">Documentos y certificaciones de la empresa</p>
-        <div className="gallery-container">
-          <div className="gallery-main">
-            <img src={images[currentImage]} alt={`Documento ${currentImage + 1}`} />
-          </div>
-          <div className="gallery-thumbs">
-            {images.map((img, index) => (
-              <button
-                key={index}
-                className={`thumb ${currentImage === index ? 'active' : ''}`}
-                onClick={() => setCurrentImage(index)}
-              >
-                <img src={img} alt={`Miniatura ${index + 1}`} />
-              </button>
-            ))}
-          </div>
+      {/* Services Section */}
+      <section id="servicios" className="services">
+        <div className="section-header">
+          <span className="section-tag">Servicios</span>
+          <h2>Nuestros Servicios</h2>
+          <p className="section-subtitle">Soluciones profesionales para cada necesidad</p>
+        </div>
+        <div className="services-grid">
+          {services.map((service, index) => (
+            <div key={index} className="service-card" style={{ animationDelay: `${index * 0.1}s` }}>
+              <div className="service-icon">{service.icon}</div>
+              <h3>{service.title}</h3>
+              <p>{service.description}</p>
+              <div className="service-card-shine"></div>
+            </div>
+          ))}
         </div>
       </section>
 
-      {/* About Section */}
-      <section id="nosotros" className="about">
-        <h2>Sobre Nosotros</h2>
-        <div className="about-content">
+      {/* Why Us Section */}
+      <section id="nosotros" className="why-us">
+        <div className="section-header">
+          <span className="section-tag">Por qué nosotros</span>
+          <h2>¿Por qué elegir Yolisa?</h2>
+          <p className="section-subtitle">Más de una década de experiencia nos avala</p>
+        </div>
+        <div className="why-us-grid">
+          <div className="why-us-card">
+            <div className="why-us-icon">⚡</div>
+            <h3>Puntualidad</h3>
+            <p>Respetamos tu tiempo. Llegamos cuando prometemos y terminamos en el plazo acordado.</p>
+          </div>
+          <div className="why-us-card">
+            <div className="why-us-icon">✨</div>
+            <h3>Calidad Garantizada</h3>
+            <p>Si no estás satisfecho, volvemos sin coste adicional. Tu tranquilidad es nuestra prioridad.</p>
+          </div>
+          <div className="why-us-card">
+            <div className="why-us-icon">🛡️</div>
+            <h3>Profesionales</h3>
+            <p>Equipo experimentado con productos profesionales y equipos de última generación.</p>
+          </div>
+          <div className="why-us-card">
+            <div className="why-us-icon">💰</div>
+            <h3>Precios Justos</h3>
+            <p>Tarifas transparentes sin sorpresas. La mejor calidad al mejor precio de la zona.</p>
+          </div>
+        </div>
+        <div className="about-info">
           <p>
             <strong>Limpiezas Integrales Yolisa SL</strong> es una empresa consolidada en Orihuela 
-            y toda la provincia de Alicante. Desde nuestra fundación, hemos apostado por la 
-            profesionalidad, la puntualidad y los resultados impecables.
+            y toda la provincia de Alicante. Nuestro equipo está formado por profesionales comprometidos 
+            con la satisfacción del cliente.
           </p>
-          <p>
-            Nuestro equipo está formado por profesionales comprometidos con la satisfacción 
-            del cliente. Cada servicio es una oportunidad para demostrar nuestra dedicación 
-            al trabajo bien hecho.
-          </p>
-          <div className="about-grid">
-            <div className="about-card">
-              <span className="card-icon">📍</span>
-              <h4>Ubicación</h4>
-              <p>Av. Marqués de Molins, 03300 Orihuela, Alicante</p>
+        </div>
+      </section>
+
+      {/* Testimonials Section */}
+      <section id="testimonios" className="testimonials">
+        <div className="section-header">
+          <span className="section-tag">Opiniones</span>
+          <h2>Lo que dicen nuestros clientes</h2>
+        </div>
+        <div className="testimonials-grid">
+          {testimonials.map((testimonial, index) => (
+            <div key={index} className="testimonial-card">
+              <div className="testimonial-stars">
+                {Array(testimonial.rating).fill('★').join('')}
+              </div>
+              <p className="testimonial-text">"{testimonial.text}"</p>
+              <div className="testimonial-author">
+                <div className="author-avatar">
+                  {testimonial.name.charAt(0)}
+                </div>
+                <div className="author-info">
+                  <span className="author-name">{testimonial.name}</span>
+                  <span className="author-location">{testimonial.location}</span>
+                </div>
+              </div>
             </div>
-            <div className="about-card">
-              <span className="card-icon">🏢</span>
-              <h4>Empresa</h4>
-              <p>Limpiezas Integrales Yolisa SL<br/>CIF: B54765482</p>
-            </div>
-            <div className="about-card">
-              <span className="card-icon">🕐</span>
-              <h4>Horario</h4>
-              <p>Lunes - Viernes<br/>9:00 - 20:00</p>
-            </div>
-          </div>
+          ))}
         </div>
       </section>
 
       {/* Contact Section */}
       <section id="contacto" className="contact">
-        <h2>Contacto</h2>
-        <p className="section-subtitle">Estamos aquí para ayudarte</p>
+        <div className="section-header">
+          <span className="section-tag">Contacto</span>
+          <h2>Hablemos</h2>
+          <p className="section-subtitle">Estamos aquí para ayudarte</p>
+        </div>
         <div className="contact-grid">
           <a href="tel:649136201" className="contact-card">
-            <span className="contact-icon">📞</span>
+            <div className="contact-icon-wrapper">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.574 2.81.7A2 2 0 0 1 22 16.92z"/>
+              </svg>
+            </div>
             <h3>Teléfono</h3>
             <p>649 136 201</p>
           </a>
-          <a href="https://wa.me/34649136201" className="contact-card" target="_blank" rel="noopener noreferrer">
-            <span className="contact-icon">💬</span>
+          <a href="https://wa.me/34649136201" className="contact-card whatsapp" target="_blank" rel="noopener noreferrer">
+            <div className="contact-icon-wrapper">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+              </svg>
+            </div>
             <h3>WhatsApp</h3>
             <p>Escríbenos directo</p>
           </a>
           <div className="contact-card">
-            <span className="contact-icon">📍</span>
+            <div className="contact-icon-wrapper">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                <circle cx="12" cy="10" r="3"/>
+              </svg>
+            </div>
             <h3>Dirección</h3>
             <p>Av. Marqués de Molins, 03300<br/>Orihuela, Alicante</p>
           </div>
           <div className="contact-card">
-            <span className="contact-icon">⏰</span>
+            <div className="contact-icon-wrapper">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <circle cx="12" cy="12" r="10"/>
+                <polyline points="12,6 12,12 16,14"/>
+              </svg>
+            </div>
             <h3>Horario</h3>
             <p>L - V: 9:00 - 20:00<br/>S-D: Cerrado</p>
           </div>
@@ -199,9 +295,14 @@ function App() {
       <footer className="footer">
         <div className="footer-content">
           <div className="footer-logo">YOLISA</div>
-          <p>Limpiezas Integrales Yolisa SL · CIF: B54765482</p>
-          <p>Av. Marqués de Molins, 03300 Orihuela, Alicante</p>
-          <p className="copyright">© 2025 Todos los derechos reservados</p>
+          <p className="footer-tagline">Limpiezas Integrales Yolisa SL · CIF: B54765482</p>
+          <p className="footer-address">Av. Marqués de Molins, 03300 Orihuela, Alicante</p>
+          <div className="footer-links">
+            <a href="tel:649136201">649 136 201</a>
+            <span className="footer-divider">·</span>
+            <a href="https://wa.me/34649136201" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+          </div>
+          <p className="copyright">© 2025 Yolisa. Todos los derechos reservados.</p>
         </div>
       </footer>
     </div>
