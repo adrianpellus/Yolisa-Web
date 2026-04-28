@@ -136,6 +136,7 @@ function App() {
       <nav className="navbar">
         <div className="nav-logo">
           <img src={logo} alt="Yolisa" className="logo-img" />
+          <span className="nav-brand">Limpiezas Integrales Yolisa</span>
         </div>
         <button className="menu-toggle" onClick={() => setIsMenuOpen(!isMenuOpen)}>
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none">

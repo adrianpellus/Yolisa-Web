@@ -59,6 +59,13 @@ body {
   width: auto;
 }
 
+.nav-brand {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--dark);
+  white-space: nowrap;
+}
+
 .nav-links {
   display: flex;
   list-style: none;
