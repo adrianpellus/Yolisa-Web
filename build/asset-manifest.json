@@ -1,23 +1,23 @@
 {
   "files": {
     "main.css": "/static/css/main.a14b7593.css",
-    "main.js": "/static/js/main.eb3acf2c.js",
-    "static/media/garantia.jpg": "/static/media/garantia.01813e78d0b6b26f6b48.jpg",
-    "static/media/precios.jpg": "/static/media/precios.ecef830932cf88ffa48e.jpg",
-    "static/media/puntualidad.jpg": "/static/media/puntualidad.7edbbfc0462d1aa17936.jpg",
-    "static/media/profesionales.jpg": "/static/media/profesionales.3ecf4ee09aa73dad821b.jpg",
+    "main.js": "/static/js/main.2881fa0d.js",
     "static/media/cocheras.jpg": "/static/media/cocheras.d0012e2cd39593fe4484.jpg",
+    "static/media/profesionales.jpg": "/static/media/profesionales.37cce7235e09a308738c.jpg",
     "static/media/eventos.jpg": "/static/media/eventos.02b6f7118653121f770a.jpg",
     "static/media/viviendas.jpg": "/static/media/viviendas.d14f07b4871db78787bb.jpg",
     "static/media/fachadas.jpg": "/static/media/fachadas.023f64e6a5a3004bdd52.jpg",
     "static/media/locales.jpg": "/static/media/locales.f035bbc97dd38ba20b95.jpg",
+    "static/media/garantia.jpg": "/static/media/garantia.d879dfedf23a40198b17.jpg",
+    "static/media/puntualidad.jpg": "/static/media/puntualidad.8f78d6d2b1027b1ac328.jpg",
     "static/media/comunidades.jpg": "/static/media/comunidades.0cfb3a683b9dbe3af8d5.jpg",
+    "static/media/precios.jpg": "/static/media/precios.1081e7f7ab684c922268.jpg",
     "index.html": "/index.html",
     "main.a14b7593.css.map": "/static/css/main.a14b7593.css.map",
-    "main.eb3acf2c.js.map": "/static/js/main.eb3acf2c.js.map"
+    "main.2881fa0d.js.map": "/static/js/main.2881fa0d.js.map"
   },
   "entrypoints": [
     "static/css/main.a14b7593.css",
-    "static/js/main.eb3acf2c.js"
+    "static/js/main.2881fa0d.js"
   ]
 }
