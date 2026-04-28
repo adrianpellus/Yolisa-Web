@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
+import logo from './logo.png';
 
 const services = [
   {
@@ -101,7 +102,7 @@ function App() {
       {/* Navigation */}
       <nav className="navbar">
         <div className="nav-logo">
-          <span className="logo-text">YOLISA</span>
+          <img src={logo} alt="Yolisa" className="logo-img" />
         </div>
         <button className="menu-toggle" onClick={() => setIsMenuOpen(!isMenuOpen)}>
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -294,7 +295,7 @@ function App() {
       {/* Footer */}
       <footer className="footer">
         <div className="footer-content">
-          <div className="footer-logo">YOLISA</div>
+          <img src={logo} alt="Yolisa" className="footer-logo-img" />
           <p className="footer-tagline">Limpiezas Integrales Yolisa SL · CIF: B54765482</p>
           <p className="footer-address">Av. Marqués de Molins, 03300 Orihuela, Alicante</p>
           <div className="footer-links">
