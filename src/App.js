@@ -1,37 +1,70 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import logo from './logo.png';
+import viviendas from './assets/services/viviendas.jpg';
+import comunidades from './assets/services/comunidades.jpg';
+import locales from './assets/services/locales.jpg';
+import eventos from './assets/services/eventos.jpg';
+import fachadas from './assets/services/fachadas.jpg';
+import cocheras from './assets/services/cocheras.jpg';
+import puntualidad from './assets/whyus/puntualidad.jpg';
+import garantia from './assets/whyus/garantia.jpg';
+import profesionales from './assets/whyus/profesionales.jpg';
+import precios from './assets/whyus/precios.jpg';
 
 const services = [
   {
-    icon: '🏠',
+    image: viviendas,
     title: 'Viviendas',
     description: 'Limpieza a fondo de hogares con productos profesionales y atención al detalle.'
   },
   {
-    icon: '🏢',
+    image: comunidades,
     title: 'Comunidades',
     description: 'Zonas comunes, portales, escaleras y garajes. Resultados impecables.'
   },
   {
-    icon: '🛍️',
+    image: locales,
     title: 'Locales Comerciales',
     description: 'Tu negocio siempre presentable. Scheduling flexible según tus necesidades.'
   },
   {
-    icon: '🎪',
+    image: eventos,
     title: 'Eventos',
     description: 'Limpieza post-evento. Bodas, fiestas, celebraciones y actos corporativos.'
   },
   {
-    icon: '🏛️',
+    image: fachadas,
     title: 'Fachadas',
     description: 'Recuperamos el aspecto de tu edificio con limpieza profesional de exteriores.'
   },
   {
-    icon: '🛒',
+    image: cocheras,
     title: 'Cocheras',
     description: 'Eliminamos grasa, manchas y polvo. Garajes impecables garantizados.'
+  }
+];
+
+const whyUs = [
+  {
+    image: puntualidad,
+    title: 'Puntualidad',
+    description: 'Respetamos tu tiempo. Llegamos cuando prometemos y terminamos en el plazo acordado.'
+  },
+  {
+    image: garantia,
+    title: 'Calidad Garantizada',
+    description: 'Más de 10 años de experiencia respaldan cada servicio que realizamos.'
+  },
+  {
+    image: profesionales,
+    title: 'Profesionales',
+    description: 'Equipo experimentado con productos profesionales y equipos de última generación.'
+  },
+  {
+    image: precios,
+    title: 'Precios Justos',
+    description: 'Tarifas transparentes sin sorpresas. La mejor calidad al mejor precio de la zona.'
   }
 ];
 
@@ -51,7 +84,7 @@ const testimonials = [
   {
     name: 'Ana Martínez',
     location: 'Orihuela',
-    text: 'Necesitaba una limpieza profunda antes de una mudanza y.lo dejaron todo perfecto. Muy contenta.',
+    text: 'Necesitaba una limpieza profunda antes de una mudanza y lo dejaron todo perfecto. Muy contenta.',
     rating: 5
   }
 ];
@@ -126,7 +159,10 @@ function App() {
             <span className="badge-dot"></span>
             Disponible ahora en Orihuela y provincia
           </div>
-          <h1>Limpiezas Integrales<br/>Yolisa</h1>
+          <div className="hero-title">
+            <img src={logo} alt="Yolisa" className="hero-logo" />
+            <h1>Limpiezas Integrales Yolisa</h1>
+          </div>
           <p className="tagline">Profesionales que cuidan lo que más importa.<br/>Resultados impecables en cada servicio.</p>
           <div className="hero-buttons">
             <a href="tel:649136201" className="btn-primary">
@@ -169,10 +205,11 @@ function App() {
         <div className="services-grid">
           {services.map((service, index) => (
             <div key={index} className="service-card" style={{ animationDelay: `${index * 0.1}s` }}>
-              <div className="service-icon">{service.icon}</div>
+              <div className="service-image">
+                <img src={service.image} alt={service.title} />
+              </div>
               <h3>{service.title}</h3>
               <p>{service.description}</p>
-              <div className="service-card-shine"></div>
             </div>
           ))}
         </div>
@@ -186,33 +223,15 @@ function App() {
           <p className="section-subtitle">Más de una década de experiencia nos avala</p>
         </div>
         <div className="why-us-grid">
-          <div className="why-us-card">
-            <div className="why-us-icon">⚡</div>
-            <h3>Puntualidad</h3>
-            <p>Respetamos tu tiempo. Llegamos cuando prometemos y terminamos en el plazo acordado.</p>
-          </div>
-          <div className="why-us-card">
-            <div className="why-us-icon">✨</div>
-            <h3>Calidad Garantizada</h3>
-            <p>Si no estás satisfecho, volvemos sin coste adicional. Tu tranquilidad es nuestra prioridad.</p>
-          </div>
-          <div className="why-us-card">
-            <div className="why-us-icon">🛡️</div>
-            <h3>Profesionales</h3>
-            <p>Equipo experimentado con productos profesionales y equipos de última generación.</p>
-          </div>
-          <div className="why-us-card">
-            <div className="why-us-icon">💰</div>
-            <h3>Precios Justos</h3>
-            <p>Tarifas transparentes sin sorpresas. La mejor calidad al mejor precio de la zona.</p>
-          </div>
-        </div>
-        <div className="about-info">
-          <p>
-            <strong>Limpiezas Integrales Yolisa SL</strong> es una empresa consolidada en Orihuela 
-            y toda la provincia de Alicante. Nuestro equipo está formado por profesionales comprometidos 
-            con la satisfacción del cliente.
-          </p>
+          {whyUs.map((item, index) => (
+            <div key={index} className="why-us-card">
+              <div className="why-us-image">
+                <img src={item.image} alt={item.title} />
+              </div>
+              <h3>{item.title}</h3>
+              <p>{item.description}</p>
+            </div>
+          ))}
         </div>
       </section>
 
